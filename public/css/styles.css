@@ -280,6 +280,7 @@ footer {
 .flash-message {
   color: red;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .register-link {
@@ -360,6 +361,106 @@ h1 {
 
 .login-link a:hover {
   text-decoration: underline;
+}
+
+/*************************
+*Add Classification
+*************************/
+
+.classification-form {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.classification-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.classification-form input[type="text"] {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc
+}
+
+.submit-btn {
+  display: inline-block;
+  background-color: #0066cc;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #004999;
+}
+
+.form-error-classification {
+  background-color: #ffe0e0;
+  border: 1px solid #ffaaaa;
+  color: #a00;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+/****************************
+*Add inventory
+****************************/
+
+.inventory-form {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.inventory-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.inventory-form input[type="text"] {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc
+}
+
+.submit-btn {
+  display: inline-block;
+  background-color: #0066cc;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #004999;
+}
+
+.form-error-inventory {
+  background-color: #ffe0e0;
+  border: 1px solid #ffaaaa;
+  color: #a00;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
 }
 
 /******Mobile Screens*******/
