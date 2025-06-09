@@ -35,6 +35,7 @@ async function buildManagement(req, res) {
 
 async function buildAddClassification(req, res) {
     const nav = await utilities.getNav()
+    const classification_name = ""
     res.render("inventory/add-classification", {
         title: "Add Classification",
         nav,
@@ -57,7 +58,7 @@ async function addClassification(req, res) {
         res.status(500).render("inventory/add-classification", {
             title: "add Classification",
             nav,
-            messages: req.flash("notice") | [],
+            messages: req.flash("notice") || [],
             errors: [{ msg: "Insert Failed" }],
             classification_name
         })
