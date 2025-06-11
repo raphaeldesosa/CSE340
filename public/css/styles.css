@@ -463,6 +463,60 @@ h1 {
   margin-bottom: 1rem;
 }
 
+/*******Management Table **********/
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 1em;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+/******Edit-Inventory*********/
+.edit-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.edit-form label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.edit-form input, .edit-form textarea, .edit-form select {
+  width: 100%;
+  padding: .6rem;
+  margin-top: .25rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.edit-form button {
+  margin-top: 1.5rem;
+  padding: .8rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.edit-form button:hover {
+  background-color: #0056b3;
+}
+
 /******Mobile Screens*******/
 
 @media (max-width: 768px) {

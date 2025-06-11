@@ -21,7 +21,7 @@ async function getInventoryByClassificationId(classificationId) {
         `SELECT i.*, c.classification_name
         FROM inventory i
         JOIN classification c ON i.classification_id = c.classification_id
-        WHERE i,classification_id = $1`,
+        WHERE i.classification_id = $1`,
         [classificationId]
     );
     return data;
@@ -52,5 +52,35 @@ async function addInventory(data) {
     return await pool.query(sql, params);
 }
 
-module.exports = {getClassifications, getVehicleById, getInventoryByClassificationId, addClassification, addInventory}
+async function updateInventory(data) {
+    const sql = `UPDATE inventory SET inv_make = $1, inv_model = $2, inv_year = $3, inv_description = $4, 
+                inv_image = $5, inv_thumbnail = $6, inv_price = $7, inv_miles = $8, inv_color = $9, classification_id = $10
+                WHERE inv_id = $11
+                RETURNING *`
+
+    const params = [
+        data.inv_make,
+        data.inv_model,
+        data.inv_year,
+        data.inv_description,
+        data.inv_image,
+        data.inv_thumbnail,
+        data.inv_price,
+        data.inv_miles,
+        data.inv_color,
+        data.classification_id,
+        data.inv_id
+    ];
+    
+    try {
+        const result = await pool.query(sql, params);
+        return result.rows[0];
+    } catch (err) {
+        console.error("Error updating inventory:", err)
+        throw err;
+    }
+}
+
+
+module.exports = {getClassifications, getVehicleById, getInventoryByClassificationId, addClassification, addInventory, updateInventory}
 
