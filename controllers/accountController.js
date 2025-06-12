@@ -129,6 +129,50 @@ async function buildAccountManagement(req, res) {
     })
 }
 
+async function buildUpdateView(req, res) {
+    const nav = await utilities.getNav()
+    const accountData = await accountModel.getAccountById(req.params.id)
+    res.render("account/account-update", {
+        title: "Update Account",
+        nav,
+        accountData,
+        errors: null
+    })
+}
+
+async function updateAccount(req, res) {
+    const { account_id, account_firstname, account_lastname, account_email } = req.body
+    const updateResult = await accountModel.updateAccount(account_firstname, account_lastname, account_email, account_id)
+    const nav = await utilities.getNav()
+    const accountData = await accountModel.getAccountById(account_id)
+    const notice = updateResult ? "Update successful!" : "Update failed"
+    req.flash("notice", notice)
+    res.render("account/account-management", {
+        title: "Account Management",
+        nav,
+        accountData,
+        messages: req.flash("notice") || [],
+        errors: null
+    }
+    )
+}
+
+async function updatePassword(req, res) {
+    const { account_id, account_password } = req.body
+    const hashedPassword = await bcrypt.hash(account_password, 10)
+    const result = await accountModel.updatePassword(account_id, hashedPassword)
+    req.flash("notice", result ? "Password updated" : "Password update failed")
+    res.redirect("/account")
+}
+
+async function logoutAccount(req, res) {
+    res.clearCookie("jwt")
+    req.flash("notice", "You have successfully logged out.")
+    res.redirect("/")
+}
 
 
-module.exports = { buildLogin, buildAccount, buildRegister, registerAccount, accountLogin, buildAccountManagement }
+
+module.exports = { buildLogin, buildAccount, buildRegister, registerAccount, accountLogin, buildAccountManagement,
+    buildUpdateView, updateAccount, updatePassword, logoutAccount
+ }

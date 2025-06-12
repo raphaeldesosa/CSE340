@@ -1,0 +1,39 @@
+<h1><%= title %></h1>
+
+<% if (Array.isArray(messages) && messages.length > 0) { %>
+  <div class="flash-message">
+    <% messages.forEach(msg => { %>
+      <p><%= msg %></p>
+    <% }) %>
+  </div>
+<% } %>
+
+<% if (errors) { %>
+        <ul class="notice">
+        <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+        <% }) %>
+        </ul>
+    <% } %>    
+
+<h2>Update Account Information</h2>
+<form method="post" action="/account/update" class="update-account">
+    <input type="hidden" name="account_id" value="<%= accountData.account_id %>" />
+    <label>First Name</label>
+    <input type="text" name="account_firstname" value="<%= accountData.account_firstname %>" />
+    <label>Last Name</label>
+    <input type="text" name="account_lastname" value="<%= accountData.account_lastname %>" />
+    <label>Email</label>
+    <input type="email" name="account_email" value="<%= accountData.account_email %>" />
+    <button type="submit">Update Info</button>
+</form>
+
+<h2>Change Password</h2>
+<form method="post" action="/account/update-password" class="change-pw">
+    <input type="hidden" name="account_id" value="<%= accountData.account_id %>" />
+    <label>New Password</label>
+    <input type="password" name="account_password" 
+      pattern="(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}"
+      title="Password must be atleast 12 characters, include a capital letter, a number, and a special character."  required />
+    <button type="submit">Update Password</button>    
+</form>

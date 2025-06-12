@@ -99,4 +99,55 @@ validate.checkLoginData = async (req, res, next) => {
     next() 
 }
 
+validate.checkPasswordData = async (req, res, next) => {
+    const error = validationResult(req)
+    if (!error.isEmpty()) {
+        const nav = await utilities.getNav()
+        return res.render("account/update", {
+            title: "Update Password",
+            nav,
+            errors,
+        })
+    }
+    next()
+}
+
+validate.updateRules = () => {
+  return [
+    body("account_firstname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("First name is required."),
+    body("account_lastname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Last name is required."),
+    body("account_email")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required.")
+  ]
+}
+
+validate.passwordRules = () => {
+  return [
+    body("account_password")
+      .trim()
+      .notEmpty()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password must be at least 12 characters and include uppercase, lowercase, number, and symbol.")
+  ]
+}
+
 module.exports = validate
