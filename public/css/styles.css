@@ -766,6 +766,17 @@ text-align: center;
   color: #333;
 }
 
+.favorite-button {
+  display: inline-block;
+  padding: .5rem 1rem;
+  color: white;
+  background-color: #003153;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
 .remove-button {
   display: inline-block;
   padding: .5rem 1rem;
