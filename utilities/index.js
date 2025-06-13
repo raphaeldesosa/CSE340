@@ -22,6 +22,10 @@ Util.getNav = async function (req, res, next) {
             "</a>"
         list += "</li>"    
     })
+
+    if (res?.locals?.loggedin) {
+        list += '<li><a href="/account/favorites" title="View your favorite vehicles">Favorites</a></li>'
+    }
     list += "</ul>"
     return list
 }
@@ -104,6 +108,7 @@ Util.checkJWTToken = (req, res, next) => {
                 if (err) {
                     req.flash("notice", "Please Log in")
                     res.clearCookie("jwt")
+                    res.locals.accountData = null
                     return res.redirect("/account/login")
                 }
                 res.locals.accountData = accountData
@@ -145,5 +150,40 @@ Util.checkAccountType = (req, res, next) => {
         return res.redirect("/account")
     }
 }
+
+/****************************
+ * Build Favorites view
+ ****************************/
+
+Util.buildFavoritesView = function(favorites) {
+    if (!favorites || favorites.length === 0) {
+        return '<p class="notice">You have no favorites yet.</p>';
+    }
+
+    let favoritesHTML = '<div class="favorites-list">';
+    
+    favorites.forEach(vehicle => {
+        favoritesHTML += `
+            <div class="favorite-item">
+                <a href="/inv/detail/${vehicle.inv_id}">
+                    <img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">
+                </a>
+                <div class="favorite-info">
+                    <h3>${vehicle.inv_make} ${vehicle.inv_model}</h3>
+                    <p><strong>Price:</strong> $${vehicle.inv_price}</p>
+                    <p><strong>Miles:</strong> ${vehicle.inv_miles} miles</p>
+                    <p><strong>Color:</strong> ${vehicle.inv_color}</p>
+                    <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+                    <form action="/account/favorites/remove/${vehicle.inv_id}" method="POST">
+                        <button type="submit" class="remove-button">Remove</button>
+                    </form>
+                </div>
+            </div>`;
+    });
+
+    favoritesHTML += '</div>';
+    return favoritesHTML;
+}
+
 
 module.exports = Util

@@ -3,6 +3,12 @@
 <main>
     <h1><%= title %></h1>
     <%- detailHtml %>
+
+    <% if (accountData) { %>
+        <form action="/account/favorites/add/<%= vehicle.inv_id %>" method="post">
+            <button type="submit">Add to Favorites</button>
+        </form>
+    <% } %>
 </main>
 
 </html>

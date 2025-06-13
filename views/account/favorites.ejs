@@ -1,0 +1,12 @@
+<h1>My Favorite Vehicles</h1>
+<% if (messages.length > 0) { %>
+    <div class="flash-message succes">
+        <% messages.forEach(msg => { %>
+            <p><%= msg %></p>
+        <% }) %>
+    </div>
+<% } %>
+
+<div class="favorites-list">
+    <%- favoriteHTML %>
+</div>

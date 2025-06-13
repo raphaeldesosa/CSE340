@@ -1,4 +1,4 @@
-<h1>Account Management</h1>
+
 
 <% if (messages && messages.length > 0) { %>
   <div class="flash-message success">
@@ -16,16 +16,22 @@
         </ul>
     <% } %>    
 
-<h2 class="welcome">Welcome <%= accountData.account_firstname %></h2>   
+<div class="management-form">
+  <h1>Account Management</h1>
+  <div class="account-card">
+    <h2>Welcome <%= accountData.account_firstname %></h2>   
 
-<% if (accountData.account_type === "Employee" || accountData.account_type === "Admin") { %>
-  <div class="management">
-    <h3>Inventory Mangement</h3>
-    <p><a href="/inv">Go to Inventory Management</a></p>
+    <% if (accountData.account_type === "Employee" || accountData.account_type === "Admin") { %>
+      <div class="management">
+        <h3>Inventory Mangement</h3>
+        <p><a href="/inv">Go to Inventory Management</a></p>
+      </div>  
+    <% } %>
+  
+      
+    <div class="account-settings">
+      <h3>Account Settings</h3>
+      <p><a href="/account/update/<%= accountData.account_id %>">Update Account Information</a></p>
+    </div>
   </div>  
-<% } %>
-
-<div class="account-settings">
-  <h3>Account Settings</h3>
-  <p><a href="/account/update/<%= accountData.account_id %>">Update Account Information</a></p>
-</div>  
+</div>    

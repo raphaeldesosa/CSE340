@@ -7,7 +7,7 @@ async function buildByClassificationId(req, res, next) {
     const classificationId = req.params.classificationId
     const data = await invModel.getInventoryByClassificationId(classificationId)
     const grid = await utilities.buildByClassificationGrid(data.rows)
-    const nav = await utilities.getNav()
+    const nav = await utilities.getNav(req,res)
 
     res.render("inventory/classification", {
         title: data.rows[0]?.classification_name + " vehicles", nav, grid
@@ -16,17 +16,21 @@ async function buildByClassificationId(req, res, next) {
 
 async function buildDetailView(req, res, next) {
     const inv_id = parseInt(req.params.inv_id)
-    const nav = await utilities.getNav()
+    const nav = await utilities.getNav(req,res)
     const vehicleData = await invModel.getVehicleById(inv_id)
     const detailHtml = utilities.buildDetailView(vehicleData)
 
     res.render("inventory/detail", {
-        title: `${vehicleData.inv_make} ${vehicleData.inv_model}`, nav, detailHtml
+        title: `${vehicleData.inv_make} ${vehicleData.inv_model}`, 
+        nav, 
+        detailHtml,
+        vehicle: vehicleData,
+        accountData: res.locals.accountData || null
     })
 }
 
 async function buildManagement(req, res) {
-    let nav = await utilities.getNav()
+    let nav = await utilities.getNav(req,res)
     const classificationSelect = await utilities.buildClassificationList()
     res.render("inventory/management", {
         title: "Inventory Management", 
@@ -37,7 +41,7 @@ async function buildManagement(req, res) {
 }
 
 async function buildAddClassification(req, res) {
-    const nav = await utilities.getNav()
+    const nav = await utilities.getNav(req,res)
     const classification_name = ""
     res.render("inventory/add-classification", {
         title: "Add Classification",
@@ -49,7 +53,7 @@ async function buildAddClassification(req, res) {
 }
 
 async function addClassification(req, res) {
-    const nav = await utilities.getNav()
+    const nav = await utilities.getNav(req,res)
     const { classification_name } = req.body
 
     const result = await invModel.addClassification(classification_name)
@@ -69,7 +73,7 @@ async function addClassification(req, res) {
 }
 
 async function buildAddInventory(req, res) {
-    const nav = await utilities.getNav()
+    const nav = await utilities.getNav(req,res)
     const classificationList = await utilities.buildClassificationList()
     res.render("inventory/add-inventory", {
         title: "Add Inventory",
@@ -80,7 +84,7 @@ async function buildAddInventory(req, res) {
 }
 
 async function addInventory(req, res) {
-    const nav = await utilities.getNav()
+    const nav = await utilities.getNav(req,res)
     const classificationId = parseInt(req.body.classification_id)
     const classificationList = await utilities.buildClassificationList(classificationId)
 
@@ -126,7 +130,7 @@ async function getInventoryJSON(req, res, next) {
 
 async function buildEditInventory(req, res, next) {
     const inv_id = parseInt(req.params.inv_id)
-    const nav = await utilities.getNav()
+    const nav = await utilities.getNav(req,res)
 
     const itemData = await invModel.getVehicleById(inv_id)
     const classificationSelect = await utilities.buildClassificationList(itemData.classification_id)
@@ -210,7 +214,7 @@ async function updateInventory(req, res, next) {
 
 async function buildDeleteView(req, res, next) {
     const inv_id = parseInt(req.params.inv_id)
-    const nav = await utilities.getNav()
+    const nav = await utilities.getNav(req,res)
     const itemData = await invModel.getVehicleById(inv_id)
     const itemName = `${itemData.inv_make} ${itemData.inv_model}`
 
@@ -228,7 +232,7 @@ async function buildDeleteView(req, res, next) {
 }
 
 async function deleteInventory(req, res, next) {
-    const nav = await utilities.getNav()
+    const nav = await utilities.getNav(req,res)
     const inv_id = parseInt(req.body.inv_id)
     const deleteResult = await invModel.deleteInventoryItem(inv_id)
 
